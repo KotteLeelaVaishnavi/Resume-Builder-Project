@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResumeGenie - {{ data.name }}</title>
+</head>
+<body>
+    <div class="container">
+        <!-- Resume Header -->
+        <div class="header">
+            <h1 class="name">{{ data.name }}</h1>
+            <div class="contact-info">
+                {% if data.contact.email %}
+                <span>{{ data.contact.email }}</span>
+                {% endif %}
+                
+                {% if data.contact.phone %}
+                <span>{{ data.contact.phone }}</span>
+                {% endif %}
+                
+                {% if data.contact.linkedin %}
+                <span>{{ data.contact.linkedin }}</span>
+                {% endif %}
+                
+                {% if data.contact.location %}
+                <span>{{ data.contact.location }}</span>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Education Section -->
+        {% if data.education %}
+        <section>
+            <h2>Education</h2>
+            <div class="section-content">
+                {% for edu in data.education %}
+                <div class="item">
+                    <div class="item-header">
+                        <div>
+                            <div class="item-title">{{ edu.institution }}</div>
+                            <div class="item-subtitle">{{ edu.degree }} in {{ edu.field }}</div>
+                        </div>
+                        <div class="item-dates">{{ edu.start_date }} - {{ edu.end_date }}</div>
+                    </div>
+                    {% if edu.gpa %}
+                    <div>GPA: {{ edu.gpa }}</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        <!-- Technical Skills Section -->
+        {% if data.technical_skills %}
+        <section>
+            <h2>Technical Skills</h2>
+            <div class="section-content">
+                <div class="skills-list">
+                    {% for skill in data.technical_skills %}
+                    <span class="skill-tag">{{ skill }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>  
+        {% endif %}
+
+        <!-- Internships Section -->
+        {% if data.internships %}
+        <section>
+            <h2>Internships</h2>
+            <div class="section-content">
+                {% for internship in data.internships %}
+                <div class="item">
+                    <div class="item-header">
+                        <div>
+                            <div class="item-title">{{ internship.position }}</div>
+                            <div class="item-subtitle">{{ internship.company }}</div>
+                        </div>
+                        <div class="item-dates">{{ internship.start_date }} - {{ internship.end_date }}</div>
+                    </div>
+                    <div class="item-description">
+                        {% if internship.enhanced_description %}
+                            {{ internship.enhanced_description|safe }}
+                        {% else %}
+                            <p>{{ internship.description }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        <!-- Work Experience Section -->
+        {% if data.experience %}
+        <section>
+            <h2>Work Experience</h2>
+            <div class="section-content">
+                {% for exp in data.experience %}
+                <div class="item">
+                    <div class="item-header">
+                        <div>
+                            <div class="item-title">{{ exp.position }}</div>
+                            <div class="item-subtitle">{{ exp.company }}</div>
+                        </div>
+                        <div class="item-dates">{{ exp.start_date }} - {{ exp.end_date }}</div>
+                    </div>
+                    <div class="item-description">
+                        {% if exp.enhanced_description %}
+                            {{ exp.enhanced_description|safe }}
+                        {% else %}
+                            <p>{{ exp.description }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        <!-- Activities Section -->
+        {% if data.activities %}
+        <section>
+            <h2>Activities & Interests</h2>
+            <div class="section-content">
+                <div class="activities-list">
+                    {% for activity in data.activities %}
+                    <span class="activity-tag">{{ activity }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        {% endif %}
+    </div>
+</body>
+</html>

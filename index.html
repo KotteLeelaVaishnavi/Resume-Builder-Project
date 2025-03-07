@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResumeGenie - Your wish for the perfect resume, granted</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        :root {
+            --primary: #30405B;
+            --secondary: #b21f1f;
+            --accent: #fdbb2d;
+            --light: #f8f9fa;
+            --dark: #343a40;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+        
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-bottom: 2rem;
+        }
+        
+        .feature {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin: 1rem;
+            width: calc(33.333% - 2rem);
+            min-width: 250px;
+            text-align: center;
+        }
+        
+        .feature i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .form-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .form-section {
+            margin-bottom: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #0d1b47;
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #921919;
+        }
+        
+        .btn-accent {
+            background-color: var(--accent);
+            color: var(--dark);
+        }
+        
+        .btn-accent:hover {
+            background-color: #e5a826;
+        }
+        
+        .item-container {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .item-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 1.5rem 0;
+            background-color: var(--dark);
+            color: white;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .feature {
+                width: calc(50% - 2rem);
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .feature {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>ResumeGenie</h1>
+            <p class="tagline">Your wish for the perfect resume, granted</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="features">
+            <div class="feature">
+                <i class="fas fa-brain"></i>
+                <h3>Prompt Engineering with AI</h3>
+                <p>Our AI helps you craft perfect descriptions for your internships and experiences.</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-check-circle"></i>
+                <h3>ATS-Friendly</h3>
+                <p>We only generate ATS-compatible resumes to maximize your chances of getting noticed.</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-edit"></i>
+                <h3>Easy Updates</h3>
+                <p>Easily update any section of your resume by going back to previous stages.</p>
+            </div>
+        </div>
+
+        <form action="/process_form" method="POST" class="form-container">
+            <!-- Personal Information -->
+            <div class="form-section">
+                <h2><i class="fas fa-user"></i> Personal Information</h2>
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="linkedin">LinkedIn URL</label>
+                    <input type="url" id="linkedin" name="linkedin">
+                </div>
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <input type="text" id="location" name="location" placeholder="City, State">
+                </div>
+            </div>
+
+            <!-- Education -->
+            <div class="form-section">
+                <h2><i class="fas fa-graduation-cap"></i> Education</h2>
+                <div id="education-container">
+                    <!-- Dynamic education entries will be added here -->
+                </div>
+                <button type="button" id="add-education" class="btn-accent">
+                    <i class="fas fa-plus"></i> Add Education
+                </button>
+                <input type="hidden" id="education_count" name="education_count" value="0">
+            </div>
+
+            <!-- Technical Skills -->
+            <div class="form-section">
+                <h2><i class="fas fa-code"></i> Technical Skills</h2>
+                <div class="form-group">
+                    <label for="skills">List your technical skills (comma separated)</label>
+                    <textarea id="skills" name="skills" rows="3" placeholder="Python, JavaScript, HTML/CSS, SQL, etc."></textarea>
+                </div>
+            </div>
+
+            <!-- Internships -->
+            <div class="form-section">
+                <h2><i class="fas fa-briefcase"></i> Internships</h2>
+                <div id="internship-container">
+                    <!-- Dynamic internship entries will be added here -->
+                </div>
+                <button type="button" id="add-internship" class="btn-accent">
+                    <i class="fas fa-plus"></i> Add Internship
+                </button>
+                <input type="hidden" id="internship_count" name="internship_count" value="0">
+            </div>
+
+            <!-- Work Experience -->
+            <div class="form-section">
+                <h2><i class="fas fa-building"></i> Work Experience</h2>
+                <div id="experience-container">
+                    <!-- Dynamic experience entries will be added here -->
+                </div>
+                <button type="button" id="add-experience" class="btn-accent">
+                    <i class="fas fa-plus"></i> Add Experience
+                </button>
+                <input type="hidden" id="experience_count" name="experience_count" value="0">
+            </div>
+
+            <!-- Activities -->
+            <div class="form-section">
+                <h2><i class="fas fa-bicycle"></i> Activities & Interests</h2>
+                <div class="form-group">
+                    <label for="activities">List your activities and interests (comma separated)</label>
+                    <textarea id="activities" name="activities" rows="3" placeholder="Volunteering, Sports, Hobbies, etc."></textarea>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-primary">
+                <i class="fas fa-magic"></i> Generate Resume
+            </button>
+        </form>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 ResumeGenie - Your wish for the perfect resume, granted</p>
+        </div>
+    </footer>
+
+    <script>
+        // Add Education Entry
+        document.getElementById('add-education').addEventListener('click', function() {
+            const educationContainer = document.getElementById('education-container');
+            const count = document.getElementById('education_count');
+            const index = parseInt(count.value);
+            
+            const educationEntry = document.createElement('div');
+            educationEntry.className = 'item-container';
+            educationEntry.innerHTML = `
+                <div class="form-group">
+                    <label for="institution_${index}">Institution Name</label>
+                    <input type="text" id="institution_${index}" name="institution_${index}" required>
+                </div>
+                <div class="form-group">
+                    <label for="degree_${index}">Degree</label>
+                    <input type="text" id="degree_${index}" name="degree_${index}" required>
+                </div>
+                <div class="form-group">
+                    <label for="field_${index}">Field of Study</label>
+                    <input type="text" id="field_${index}" name="field_${index}" required>
+                </div>
+                <div class="form-group">
+                    <label for="edu_start_date_${index}">Start Date</label>
+                    <input type="text" id="edu_start_date_${index}" name="edu_start_date_${index}" placeholder="e.g., Sep 2020" required>
+                </div>
+                <div class="form-group">
+                    <label for="edu_end_date_${index}">End Date</label>
+                    <input type="text" id="edu_end_date_${index}" name="edu_end_date_${index}" placeholder="e.g., May 2024 or Present" required>
+                </div>
+                <div class="form-group">
+                    <label for="gpa_${index}">GPA (Optional)</label>
+                    <input type="text" id="gpa_${index}" name="gpa_${index}" placeholder="e.g., 3.8/4.0">
+                </div>
+                <div class="item-actions">
+                    <button type="button" class="remove-btn btn-secondary" onclick="removeEducation(this)">
+                        <i class="fas fa-trash"></i> Remove
+                    </button>
+                </div>
+            `;
+            
+            educationContainer.appendChild(educationEntry);
+            count.value = index + 1;
+        });
+
+        function removeEducation(button) {
+            const container = button.closest('.item-container');
+            container.remove();
+            // We don't decrement the count because it would mess up the indices
+        }
+
+        // Add Internship Entry
+        document.getElementById('add-internship').addEventListener('click', function() {
+            const internshipContainer = document.getElementById('internship-container');
+            const count = document.getElementById('internship_count');
+            const index = parseInt(count.value);
+            
+            const internshipEntry = document.createElement('div');
+            internshipEntry.className = 'item-container';
+            internshipEntry.innerHTML = `
+                <div class="form-group">
+                    <label for="intern_company_${index}">Company</label>
+                    <input type="text" id="intern_company_${index}" name="intern_company_${index}" required>
+                </div>
+                <div class="form-group">
+                    <label for="intern_position_${index}">Position</label>
+                    <input type="text" id="intern_position_${index}" name="intern_position_${index}" required>
+                </div>
+                <div class="form-group">
+                    <label for="intern_start_date_${index}">Start Date</label>
+                    <input type="text" id="intern_start_date_${index}" name="intern_start_date_${index}" placeholder="e.g., Jun 2022" required>
+                </div>
+                <div class="form-group">
+                    <label for="intern_end_date_${index}">End Date</label>
+                    <input type="text" id="intern_end_date_${index}" name="intern_end_date_${index}" placeholder="e.g., Aug 2022 or Present" required>
+                </div>
+                <div class="form-group">
+                    <label for="intern_description_${index}">Description</label>
+                    <textarea id="intern_description_${index}" name="intern_description_${index}" rows="4" placeholder="Describe your responsibilities and achievements" required></textarea>
+                    <small class="form-text">Provide a brief description of your internship, and we'll enhance it with AI to be ATS-friendly.</small>
+                </div>
+                <div class="item-actions">
+                    <button type="button" class="remove-btn btn-secondary" onclick="removeInternship(this)">
+                        <i class="fas fa-trash"></i> Remove
+                    </button>
+                </div>
+            `;
+            
+            internshipContainer.appendChild(internshipEntry);
+            count.value = index + 1;
+        });
+
+        function removeInternship(button) {
+            const container = button.closest('.item-container');
+            container.remove();
+        }
+
+        // Add Experience Entry
+        document.getElementById('add-experience').addEventListener('click', function() {
+            const experienceContainer = document.getElementById('experience-container');
+            const count = document.getElementById('experience_count');
+            const index = parseInt(count.value);
+            
+            const experienceEntry = document.createElement('div');
+            experienceEntry.className = 'item-container';
+            experienceEntry.innerHTML = `
+                <div class="form-group">
+                    <label for="exp_company_${index}">Company</label>
+                    <input type="text" id="exp_company_${index}" name="exp_company_${index}" required>
+                </div>
+                <div class="form-group">
+                    <label for="exp_position_${index}">Position</label>
+                    <input type="text" id="exp_position_${index}" name="exp_position_${index}" required>
+                </div>
+                <div class="form-group">
+                    <label for="exp_start_date_${index}">Start Date</label>
+                    <input type="text" id="exp_start_date_${index}" name="exp_start_date_${index}" placeholder="e.g., Jan 2021" required>
+                </div>
+                <div class="form-group">
+                    <label for="exp_end_date_${index}">End Date</label>
+                    <input type="text" id="exp_end_date_${index}" name="exp_end_date_${index}" placeholder="e.g., Dec 2022 or Present" required>
+                </div>
+                <div class="form-group">
+                    <label for="exp_description_${index}">Description</label>
+                    <textarea id="exp_description_${index}" name="exp_description_${index}" rows="4" placeholder="Describe your responsibilities and achievements" required></textarea>
+                    <small class="form-text">Provide a brief description of your work experience, and we'll enhance it with AI to be ATS-friendly.</small>
+                </div>
+                <div class="item-actions">
+                    <button type="button" class="remove-btn btn-secondary" onclick="removeExperience(this)">
+                        <i class="fas fa-trash"></i> Remove
+                    </button>
+                </div>
+            `;
+            
+            experienceContainer.appendChild(experienceEntry);
+            count.value = index + 1;
+        });
+
+        function removeExperience(button) {
+            const container = button.closest('.item-container');
+            container.remove();
+        }
+
+        // Add some initial items by default
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('add-education').click();
+            document.getElementById('add-internship').click();
+            document.getElementById('add-experience').click();
+        });
+    </script>
+</body>
+</html>

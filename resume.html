@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ResumeGenie - Your Resume</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a2a6c;
+            --secondary: #b21f1f;
+            --accent: #fdbb2d;
+            --light: #f8f9fa;
+            --dark: #343a40;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+        
+        .resume-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #0d1b47;
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #921919;
+        }
+        
+        .btn-accent {
+            background-color: var(--accent);
+            color: var(--dark);
+        }
+        
+        .btn-accent:hover {
+            background-color: #e5a826;
+        }
+        
+        .resume-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 1rem;
+        }
+        
+        .resume-name {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .resume-section {
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            color: var(--secondary);
+            border-bottom: 1px solid var(--accent);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .resume-item {
+            margin-bottom: 1.5rem;
+        }
+        
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 0.5rem;
+        }
+        
+        .item-title {
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .item-subtitle {
+            font-style: italic;
+        }
+        
+        .item-dates {
+            color: #666;
+        }
+        
+        .item-description ul {
+            margin-top: 0.5rem;
+            padding-left: 1.5rem;
+        }
+        
+        .skills-list, .activities-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+        
+        .skill-tag, .activity-tag {
+            background-color: #f0f2f5;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .ats-score-container {
+            background-color: #f0f2f5;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .ats-score {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .ats-suggestions {
+            margin-top: 1rem;
+        }
+        
+        .ats-suggestions ul {
+            padding-left: 1.5rem;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 1.5rem 0;
+            background-color: var(--dark);
+            color: white;
+            margin-top: 2rem;
+        }
+        
+        @media print {
+            body {
+                background-color: white;
+            }
+            
+            header, .action-buttons, footer, .ats-score-container {
+                display: none;
+            }
+            
+            .container, .resume-container {
+                width: 100%;
+                max-width: 100%;
+                margin: 0;
+                padding: 0;
+                box-shadow: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .contact-info {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>ResumeGenie</h1>
+            <p class="tagline">Your wish for the perfect resume, granted</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="action-buttons">
+            <a href="/" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Editor
+            </a>
+            <a href="/generate-pdf" class="btn btn-accent">
+                <i class="fas fa-file-pdf"></i> Download PDF
+            </a>
+        </div>
+
+        <div class="resume-container">
+            <!-- Resume Header -->
+            <div class="resume-header">
+                <h1 class="resume-name">{{ data.name }}</h1>
+                <div class="contact-info">
+                    {% if data.contact.email %}
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>{{ data.contact.email }}</span>
+                    </div>
+                    {% endif %}
+                    
+                    {% if data.contact.phone %}
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>{{ data.contact.phone }}</span>
+                    </div>
+                    {% endif %}
+                    
+                    {% if data.contact.linkedin %}
+                    <div class="contact-item">
+                        <i class="fab fa-linkedin"></i>
+                        <span>{{ data.contact.linkedin }}</span>
+                    </div>
+                    {% endif %}
+                    
+                    {% if data.contact.location %}
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>{{ data.contact.location }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Education Section -->
+            {% if data.education %}
+            <div class="resume-section">
+                <h2 class="section-title"><i class="fas fa-graduation-cap"></i> Education</h2>
+                {% for edu in data.education %}
+                <div class="resume-item">
+                    <div class="item-header">
+                        <div>
+                            <div class="item-title">{{ edu.institution }}</div>
+                            <div class="item-subtitle">{{ edu.degree }} in {{ edu.field }}</div>
+                        </div>
+                        <div class="item-dates">{{ edu.start_date }} - {{ edu.end_date }}</div>
+                    </div>
+                    {% if edu.gpa %}
+                    <div>GPA: {{ edu.gpa }}</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Technical Skills Section -->
+            {% if data.technical_skills %}
+            <div class="resume-section">
+                <h2 class="section-title"><i class="fas fa-code"></i> Technical Skills</h2>
+                <div class="skills-list">
+                    {% for skill in data.technical_skills %}
+                    <div class="skill-tag">{{ skill }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Internships Section -->
+            {% if data.internships %}
+            <div class="resume-section">
+                <h2 class="section-title"><i class="fas fa-briefcase"></i> Internships</h2>
+                {% for internship in data.internships %}
+                <div class="resume-item">
+                    <div class="item-header">
+                        <div>
+                            <div class="item-title">{{ internship.position }}</div>
+                            <div class="item-subtitle">{{ internship.company }}</div>
+                        </div>
+                        <div class="item-dates">{{ internship.start_date }} - {{ internship.end_date }}</div>
+                    </div>
+                    <div class="item-description">
+                        {% if internship.enhanced_description %}
+                            {{ internship.enhanced_description|safe }}
+                        {% else %}
+                            <p>{{ internship.description }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Work Experience Section -->
+            {% if data.experience %}
+            <div class="resume-section">
+                <h2 class="section-title"><i class="fas fa-building"></i> Work Experience</h2>
+                {% for exp in data.experience %}
+                <div class="resume-item">
+                    <div class="item-header">
+                        <div>
+                            <div class="item-title">{{ exp.position }}</div>
+                            <div class="item-subtitle">{{ exp.company }}</div>
+                        </div>
+                        <div class="item-dates">{{ exp.start_date }} - {{ exp.end_date }}</div>
+                    </div>
+                    <div class="item-description">
+                        {% if exp.enhanced_description %}
+                            {{ exp.enhanced_description|safe }}
+                        {% else %}
+                            <p>{{ exp.description }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Activities Section -->
+            {% if data.activities %}
+            <div class="resume-section">
+                <h2 class="section-title"><i class="fas fa-bicycle"></i> Activities & Interests</h2>
+                <div class="activities-list">
+                    {% for activity in data.activities %}
+                    <div class="activity-tag">{{ activity }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- ATS Score & Suggestions -->
+        {% if data.ats_score is defined %}
+        <div class="ats-score-container">
+            <h2><i class="fas fa-chart-bar"></i> ATS Compatibility</h2>
+            <div class="ats-score">
+                Score: {{ data.ats_score }}/100
+                {% if data.ats_score >= 90 %}
+                <i class="fas fa-medal" style="color: gold;"></i>
+                {% elif data.ats_score >= 70 %}
+                <i class="fas fa-thumbs-up" style="color: green;"></i>
+                {% else %}
+                <i class="fas fa-exclamation-triangle" style="color: orange;"></i>
+                {% endif %}
+            </div>
+            {% if data.ats_suggestions %}
+            <div class="ats-suggestions">
+                <h3>Improvement Suggestions:</h3>
+                <ul>
+                    {% for suggestion in data.ats_suggestions %}
+                    <li>{{ suggestion }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 ResumeGenie - Your wish for the perfect resume, granted</p>
+        </div>
+    </footer>
+</body>
+</html>
